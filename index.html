@@ -1,76 +1,168 @@
 <!DOCTYPE html>
-<html lang="en"  ng-app="myApp">
+<html ng-app="">
 <head>
-<meta charset="utf-8">
-<title>Hello IS429 from Hosanna</title>
-<meta name="viewport" content="width=device-width,initial-scale=1">
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.0-beta.17/angular.min.js"></script>
-    <script src="https://cdn.firebase.com/js/client/2.0.4/firebase.js"></script>
-    <script src="https://cdn.firebase.com/libs/angularfire/0.8.0/angularfire.min.js"></script>
-    <link rel='stylesheet' href='https://sandbox-tutorial.firebaseapp.com/resources/tutorial/css/example.css'/>
-<!--[if IE]>
-  <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-<![endif]-->
-<link href='//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+<link rel="stylesheet" href = "http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+<script src= "http://ajax.googleapis.com/ajax/libs/angularjs/1.2.26/angular.min.js"></script>
 </head>
 
-<body ng-controller="MyController" style="background-color:#90CAEE;padding:10px;">
+<body ng-controller="userController">
+<div class="container">
 
-    <!-- CHAT MARKUP -->
-    <div class='example-chat l-demo-container'>
-      <header>IS 429 Chat</header>
+<h3>Users</h3>
 
-      <div class='example-chat-toolbar'>
-        <label for='nameInput'>Username:</label>
-        <input ng-model='name' type='text' id='nameInput' placeholder='enter a username...'>
-      </div>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Edit</th>
+      <th>First Name</th>
+      <th>Last Name</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr ng-repeat="user in users">
+      <td>
+        <button class="btn" ng-click="editUser(user.id)">
+          <span class="glyphicon glyphicon-pencil"></span>  Edit
+        </button>
+      </td>
+      <td>{{ user.fName }}</td>
+      <td>{{ user.lName }}</td>
+      <td>
+        <button class="btn" ng-click="deleteUser(user.id)">
+          <span class="glyphicon glyphicon-pencil"></span>  Delete
+        </button>
+      </td>
+    </tr>
+  </tbody>
+</table>
 
-      <ul id='example-messages' class='example-chat-messages'>
-        <li ng-repeat='msg in messages'>
-          <strong class='example-chat-username'>{{msg.from}}</strong>
-          {{msg.body}}
-        </li>
-      </ul>
+<hr>
+<button class="btn btn-success" ng-click="editUser('new')">
+<span class="glyphicon glyphicon-user"></span>  Create New User
+</button>
+<hr>
 
-      <footer>
-        <input ng-model='msg' ng-keydown="addMessage($event)" type='text' id='messageInput' placeholder='Enter your comment'>
-      </footer>
-      <br><b>
-        <a style="font-size:20px;text-align:center;" href="http://jimmysoh.github.io/IS429/form.html">Link to Jimmy's page</a>
-    </b>
-    <br>
+
+<h3 ng-show="edit">Create New User:</h3>
+<h3 ng-hide="edit">Edit User:</h3>
+
+<form class="form-horizontal">
+  <div class="form-group">
+    <label class="col-sm-2 control-label">First Name:</label>
+    <div class="col-sm-10">
+    <input type="text" ng-model="fName" ng-disabled="!edit" placeholder="First Name">
     </div>
-    <script>
-      var myApp = angular.module("myApp", ["firebase"]);
+  </div> 
+  <div class="form-group">
+    <label class="col-sm-2 control-label">Last Name:</label>
+    <div class="col-sm-10">
+    <input type="text" ng-model="lName" ng-disabled="!edit" placeholder="Last Name">
+    </div>
+  </div>
+  <div class="form-group">
+    <label class="col-sm-2 control-label">Password:</label>
+    <div class="col-sm-10">
+    <input type="password" ng-model="passw1" placeholder="Password">
+    </div>
+  </div>
+  <div class="form-group">
+    <label class="col-sm-2 control-label">Repeat:</label>
+    <div class="col-sm-10">
+    <input type="password" ng-model="passw2" placeholder="Repeat Password">
+    </div>
+  </div>
+</form>
 
-      myApp.controller('MyController', ['$scope', '$firebase',
-        function($scope, $firebase) {
-          //CREATE A FIREBASE REFERENCE
-          var ref = new Firebase("https://amber-torch-9994.firebaseio.com/");
+<hr>
+<button class="btn btn-success" ng-disabled="error || incomplete" ng-click="save()">
+<span class="glyphicon glyphicon-save"></span>  Save Changes
+</button>
 
-          // GET MESSAGES AS AN ARRAY
-          $scope.messages = $firebase(ref).$asArray();
+</div>
 
-          //ADD MESSAGE METHOD
-          $scope.addMessage = function(e) {
-
-            //LISTEN FOR RETURN KEY
-            if (e.keyCode === 13 && $scope.msg) {
-              //ALLOW CUSTOM OR ANONYMOUS USER NAMES
-              var name = $scope.name || 'anonymous';
-
-              //ADD TO FIREBASE
-              $scope.messages.$add({
-                from: name,
-                body: $scope.msg
-              });
-
-              //RESET MESSAGE
-              $scope.msg = "";
-            }
-          }
+<script>
+  function userController($scope) {
+    $scope.fName = '';
+    $scope.lName = '';
+    $scope.passw1 = '';
+    $scope.passw2 = '';
+    
+    //We can replace this with a Firebase url later on. 
+    $scope.users = [
+        {id:1, fName:'Hege'  , lName:"Pege" },
+        {id:2, fName:'Kim'   , lName:"Pim" },
+        {id:3, fName:'Jack'  , lName:"Jones" },
+        {id:4, fName:'John'  , lName:"Doe" },
+        {id:5, fName:'Peter' , lName:"Pan" }
+    ];
+    
+    $scope.edit = true;
+    $scope.error = false;
+    $scope.incomplete = false;  
+    
+    
+    $scope.editUser = function(id) {
+        $scope.currentId = id;
+        if (id == 'new') {
+            $scope.edit = true;
+            $scope.incomplete = true;
+            $scope.fName = '';
+            $scope.lName = '';
+            console.log("new user.");
+        } else {
+            $scope.edit = true;
+            $scope.fName = $scope.users[id-1].fName;
+            $scope.lName = $scope.users[id-1].lName; 
+            console.log("existing user.");
         }
-      ]);
-    </script>
-  </body>
+    };
+    
+    $scope.$watch('passw1',function() {$scope.test();});
+    $scope.$watch('passw2',function() {$scope.test();});
+    $scope.$watch('fName', function() {$scope.test();});
+    $scope.$watch('lName', function() {$scope.test();});
+    $scope.test = function() {
+        if ($scope.passw1 !== $scope.passw2) {
+            $scope.error = true;
+        } else {
+            $scope.error = false;
+        }
+        $scope.incomplete = false;
+        if ($scope.edit && (!$scope.fName.length || !$scope.lName.length|| !$scope.passw1.length || !$scope.passw2.length)) {
+            $scope.incomplete = true;
+        }
+    };
+    $scope.save = function(){
+      //Add new if no index is passed in.
+      if($scope.currentId=='new'){
+        //Using the array length as the next index while prototyping. 
+        $scope.users.push({id:$scope.users.length+1, fName:$scope.fName  , lName:$scope.lName });
+      }
+      else{
+        $scope.users[$scope.currentId-1].fName = $scope.fName;
+        $scope.users[$scope.currentId-1].lName = $scope.lName;
+      }
+    };
+    
+    $scope.deleteUser = function(index){
+      $scope.users.splice(index-1, 1);
+    }
+    
+    }
+  
+</script>
+</body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
