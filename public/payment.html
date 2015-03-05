@@ -1,275 +1,88 @@
 <!DOCTYPE html>
-<html ng-app="myApp">
+<html>
+
 <head>
-<link rel="stylesheet" href = "https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
-<script src= "https://ajax.googleapis.com/ajax/libs/angularjs/1.2.26/angular.min.js"></script>
-    <script src="https://cdn.firebase.com/js/client/2.0.4/firebase.js"></script>
-    <script src="https://cdn.firebase.com/libs/angularfire/0.8.0/angularfire.min.js"></script>
-  
+
+  <meta charset="UTF-8">
+
+  <title>Jingle - Pricing Table</title>
+
+    <link rel="stylesheet" href="css/style.css">
+
 </head>
 
-<body ng-controller="userController">
-<div class="container">
+<body>
 
-<hr>
-The Singapore Government has launched a scheme where they will pay university students and recent graduates to work for local SaaS companies for up to 1 year. In addition to this government-funded subsidy, we are authorized to pay you an incentive bonus plan based on your ability to facilitate the growth of our SaaS business. Our company’s bonus plan will pay you the full amount of all recurring revenue that you personally help to facilitate. We will continue to award you all recurring revenue for 1 year after you leave the company. Please watch our short onboarding video to get an understanding of our servic.e After that, we would appreciate your feedback on what we could do to increase the possibility of you joining our company to help facilitate our growth. 
-<hr>
-Click <a href="https://paypaltestapp.herokuapp.com/">here</a> for payment<br>
-<br><i>Note:</i><br>
-Use this dummy account to try buying:<br>
-<b>User: </b> light_pegasus_valkyrie-buyer@yahoo.com<br>
-<b>Password: </b> Awesome**<br><br>
+  <section class="layer plans">
+  <section>
 
+    <section class="third lift plan-tier" onclick="location.href='#';">
 
-<a href="">Click here</a> to open our application in another tab<br>
-<a href="">Click here</a> to watch our overview video.<br>
-<br>
+      <h4>Solo</h4>
+      <h5><sup class="superscript">$</sup><span class="plan-price">5</span><sub> /mo</sub></h5>
 
-<!-- Show this div when the users is logged in -->
-<div ng-show="currentUser">
-  You are logged in as: {{currentUser.github.displayName}} <br><br>
-  <button class="btn btn-success" ng-click="editFeedback('new')">
-    <span class="glyphicon"></span>Click here to leave feedback.
-  </button>
-    <button class="btn btn-success" ng-click="logout()">
-    <span class="glyphicon"></span>Logout </button>
-</div>
+      <p class="early-adopter-price">Early adopter price</p><br>
+      <del>$10/mo</del>
 
-
-<!-- Show this div when the user is not logged in -->
-<div ng-hide="currentUser">
-  <button class="btn btn-success" ng-click="login('github')">
-    <span class="glyphicon glyphicon-user"></span>Login to leave feedback.
-  </button>
-</div>
-
-<div ng-show="edit">
-<h3 ng-show="edit">Leave Feedback:</h3>
-
-<form class="form-horizontal">
-  <div class="form-group">
-    <label class="col-sm-2 control-label">UserID: </label>{{newuser.uid}}
-  </div> 
-  <div class="form-group">
-    <label class="col-sm-2 control-label">First Name:</label>
-    <div class="col-sm-10">
-    <input type="text" ng-model="newuser.fName" ng-disabled="!edit" placeholder="First Name">
-    </div>
-  </div> 
-  <div class="form-group">
-    <label class="col-sm-2 control-label">Last Name:</label>
-    <div class="col-sm-10">
-    <input type="text" ng-model="newuser.lName" ng-disabled="!edit" placeholder="Last Name">
-    </div>
-  </div>
-  <div class="form-group">
-    <label class="col-sm-2 control-label">SMU Email:</label>
-    <div class="col-sm-10">
-    <input type="text" ng-model="newuser.email" ng-disabled="!edit" placeholder="cboesch@mitb.smu.edu.sg">
-    </div>
-  </div> 
-  <div class="form-group">
-    <label class="col-sm-2 control-label">School:</label>
-    <div class="col-sm-10">
-    <input type="text" ng-model="newuser.school" ng-disabled="!edit" placeholder="(MBA, MM, Bus, SS, Econ)">
-    </div>
-  </div> 
-  <div class="form-group">
-    <label class="col-sm-2 control-label">What should we start doing?</label>
-    <div class="col-sm-10">
-    <input type="text" ng-model="newuser.start" ng-disabled="!edit" placeholder="You should start ..">
-    </div>
-  </div> 
-    <div class="form-group">
-    <label class="col-sm-2 control-label">What should we stop doing?</label>
-    <div class="col-sm-10">
-    <input type="text" ng-model="newuser.stop" ng-disabled="!edit" placeholder="You should stop ..">
-    </div>
-  </div> 
-    <div class="form-group">
-    <label class="col-sm-2 control-label">What should we continue doing?</label>
-    <div class="col-sm-10">
-    <input type="text" ng-model="newuser.continue" ng-disabled="!edit" placeholder="You should continue ..">
-    </div>
-  </div> 
-    <div class="form-group">
-    <label class="col-sm-2 control-label">What other recommendations do you have?</label>
-    <div class="col-sm-10">
-    <input type="text" ng-model="newuser.other" ng-disabled="!edit" placeholder="You should also ..">
-    </div>
-  </div> 
-</form>
-
-<button class="btn btn-success"  ng-click="save()">
-<span class="glyphicon glyphicon-save"></span>  Save Feedback
-</button>
-
-</div>
-<hr>
-Please consider reviewing the applications of:
-<ul>
-  <li>the team presenting before us (<a href="">Team 4</a>)</li>
-  <li>the team presenting after us (<a href="">Team 6</a>)</li>
+      <ul>
+<li><strong>1</strong> site</li>
+<li><strong>1</strong> user</li>
+<li><strong>Free hosting</strong> (beta)</li>
+<li>14 day <strong>free trial</strong></li>
 </ul>
 
-    <input type="checkbox" ng-model="hide_table" ng-init="hide_table=false"> Show submitted feedback.
-    <table ng-show="hide_table" class="table table-striped">
-      <thead>
-        <tr>
-          <th class="hidden-xs">Edit</th>
-          <th class="hidden-xs hidden-sm">UID</th>
-          <th>First Name</th>
-          <th class="hidden-xs">Last Name</th>
-          <th class="hidden-xs hidden-sm">Email</th>
-          <th>School</th>
-          <th>Start</th>
-          <th>Stop</th>
-          <th>Continue</th>
-          <th class="hidden-xs">Other</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr ng-repeat="user in users">
-          <td class="hidden-xs">
-            <button class="btn" ng-click="editFeedback(user.$id)">
-              <span class="glyphicon glyphicon-pencil"></span>  Edit
-            </button>
-          </td>
-          <td class="hidden-xs hidden-sm">{{ user.uid }}</td>
-          <td>{{ user.fName }}</td>
-          <td class="hidden-xs">{{ user.lName }}</td>
-          <td class="hidden-xs hidden-sm">{{ user.email }}</td>
-          <td>{{ user.school }}</td>
-          <td>{{ user.start }}</td>
-          <td>{{ user.stop }}</td>
-          <td>{{ user.continue }}</td>
-          <td class="hidden-xs">{{ user.other }}</td>
-        
-          <td class="hidden-xs">
-            <button class="btn" ng-click="deleteFeedback($index)">
-              <span class="glyphicon glyphicon-pencil"></span>  Delete
-            </button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-</div>
-<script>
-  var myApp = angular.module("myApp", ["firebase"]);
-  myApp.controller('userController', ['$scope', '$firebase',
-    function($scope, $firebase) {
-    $scope.newuser = {};
-    
-    // Here is where you update your Firebase URL. 
-    var theFirebaseURL = "https://feedbackcloudclass.firebaseio.com/";
-    
-    var ref = new Firebase(theFirebaseURL);
-    $scope.users = $firebase(ref.child("feedback")).$asArray(); 
+    </section>
 
-    $scope.edit = false;
-    $scope.error = false;
-    $scope.incomplete = false;  
-    
-    $scope.currentUser = null;
-    //Check to see if the users is already logged in to Firebase and update currentUser if yes. 
-    var authData = ref.getAuth();
-      if (authData && authData!={}) {
-          $scope.currentUser = $firebase(ref.child("user").child(authData.uid)).$asObject();
-      } else {
-          console.log("User is logged out");
-      }
-    
-    $scope.logout = function(loginProvider){
-        $scope.currentUser = null;
-    }
-    
-    $scope.login = function(loginProvider){
-          ref.authWithOAuthPopup(loginProvider, function(error, authData) {
-            if (error) {
-              console.log("Login Failed!", error);
-            } else {
-              console.log("Authenticated successfully with payload:", authData);
-              //Add the user to the users list. 
-              ref.child("user/"+authData.uid).transaction(function(currentValue) {
-                  return authData;
-                });
-              $scope.currentUser = $firebase(ref.child("user").child(authData.uid)).$asObject();    
-              $scope.users = $firebase(ref.child("feedback")).$asArray();
-            }
-          });
-        }
-        
-    $scope.editFeedback = function(id) {
-        $scope.currentId = id;
-        if (id == 'new') {
-            $scope.edit = true;
-            $scope.incomplete = true;
-            $scope.newuser = {};
-            console.log("new feedback.");
-        } else {
-            $scope.edit = true;
-            $scope.newuser = $firebase(ref.child("feedback").child(id)).$asObject();
-            console.log("existing feedback.");
-        }
-    };
-    
-    $scope.save = function(){
-      //Add new if no index is passed in.
-      
-      if($scope.currentId=='new'){
-        //Add the currentUser UID. 
-        $scope.newuser.uid = $scope.currentUser.uid;
-        $scope.users.$add($scope.newuser);
-      }
-      else{
-        $scope.newuser.$save();
-      }
-      $scope.edit = false;
-    };
-    
-    $scope.deleteFeedback = function(index){
-      $scope.users.$remove(index);
-      console.log("removing "+index);
-    }
-    
-    }]);
+    <section class="third lift plan-tier callout" onclick="location.href='#';">
 
-/* Firebase security rules to protect user data and feedback. 
-{
-  "rules": {
-    "user":{
-          "$user_id": {
-            // grants write access to the owner of this user account whose uid must exactly match the key ($user_id)
-            ".write": "$user_id === auth.uid",
-            ".read": true
-          }
-    }, 
-    "feedback":{
-      //Let everyone read all feedback if they are logged in. 
-      ".read": "auth!=null",
-      //Only let people create and edit their own items. 
-      "$feedbackID":{
-        ".write": "(newData.child('uid').val() == auth.uid || data.child('uid').val() == auth.uid) && auth!=null"
-      }
-    }
-    
-  }
-}
-*/
-  </script>
-  
-  
-  <!-- Google Tracking code. Change the UA-XXXXXXX key to be yours -->
-<script>
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+      <h6>Most popular</h6>
+      <h4>Team</h4>
+      <h5><sup class="superscript">$</sup><span class="plan-price">20</span><sub> /mo</sub></h5>
 
-  ga('create', 'UA-45019302-1', 'auto');
-  ga('send', 'pageview');
+      <p class="early-adopter-price">Early adopter price</p><br>
+      <del>$40/mo</del>
 
-</script>
+      <ul>
+<li>Up to <strong>10</strong> sites</li>
+<li>Up to <strong>10</strong> users per site</li>
+<li><strong>Free hosting</strong> (beta)</li>
+<li>14 day <strong>free trial</strong></li>
+</ul>
+
+    </section>
+
+    <section class="third lift plan-tier" onclick="location.href='#';">
+
+      <h4>Agency</h4>
+      <h5><sup class="superscript">$</sup><span class="plan-price">100</span><sub> /mo</sub></h5>
+
+      <p class="early-adopter-price">Early adopter price</p><br>
+      <del>$200/mo</del>
+
+      <ul>
+<li><strong>Unlimited</strong> sites</li>
+<li><strong>Unlimited</strong> users</li>
+<li><strong>Free hosting</strong> (beta)</li>
+<li>14 day <strong>free trial</strong></li>
+</ul>
+
+    </section>
+
+    <div style="clear: both"></div>
+  </section>
+</section>
+
+	<script>
+	  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+	  ga('create', 'UA-45019302-1', 'auto');
+	  ga('send', 'pageview');
+
+	</script>
+
 </body>
-</html>
 
+</html>
