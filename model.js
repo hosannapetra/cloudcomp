@@ -17,8 +17,8 @@ module.exports = {
     'firebase': firebaseRef,
     'plans': {
         //defines the plans that are available
-        "30": {
-            "description": "Premium",
+        "2999": {
+            "description": "Regular Plan",
             "merchant_preferences": {
                 "auto_bill_amount": "yes",
                 "cancel_url": cancel_url,
@@ -30,12 +30,12 @@ module.exports = {
                     "value": "0"
                 }
             },
-            "name": "Premium",
+            "name": "Regular Plan",
             "payment_definitions": [
                 {
                     "amount": {
                         "currency": "SGD",
-                        "value": "30"
+                        "value": "29.99"
                     },
                     "cycles": "0",
                     "frequency": "MONTH",
@@ -56,6 +56,46 @@ module.exports = {
                 }
             ],
             "type": "INFINITE"
+        },
+        '5999': {
+            "description": "Premium Plan",
+            "merchant_preferences": {
+                "auto_bill_amount": "yes",
+                "cancel_url": cancel_url,
+                "initial_fail_amount_action": "continue",
+                "max_fail_attempts": "1",
+                "return_url": return_url,
+                "setup_fee": {
+                    "currency": "SGD",
+                    "value": "0"
+                }
+            },
+            "name": "Premium Plan",
+            "payment_definitions": [
+                {
+                    "amount": {
+                        "currency": "SGD",
+                        "value": "59.99"
+                    },
+                    "cycles": "0",
+                    "frequency": "MONTH",
+                    "frequency_interval": "1",
+                    "name": "Premium 1",
+                    "type": "REGULAR"
+                },
+                {
+                    "amount": {
+                        "currency": "SGD",
+                        "value": "39.99"
+                    },
+                    "cycles": "1",
+                    "frequency": "MONTH",
+                    "frequency_interval": "1",
+                    "name": "Trial 2",
+                    "type": "TRIAL"
+                }
+            ],
+            "type": "INFINITE"
         }  
     },
     //defines the data required to activate the plan
@@ -69,8 +109,8 @@ module.exports = {
     //creates billing agreement data based on the tier and address
     'createAgreementData': function(tier, planId, address){
         return {
-            "name": tier == '30'? "Premium Plan": "Premium Plan",
-            "description": tier == '30'? "Premium Plan": "Premium Plan",
+            "name": tier == '2999'? "Regular Plan": "Premium Plan",
+            "description": tier == '2999'? "Regular Plan": "Premium Plan",
             "start_date": getStartDate(),
             "plan":{
                 "id": planId
